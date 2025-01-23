@@ -61,3 +61,6 @@ PDF files can contain JavaScript in several locations. Here are the areas to che
 /Type /Action
 >>
 ```
+
+An important note: Not all PDF readers will execute JavaScript from these locations. Different readers have varying levels of JavaScript support. However, we check all these locations to ensure comprehensive security
+
