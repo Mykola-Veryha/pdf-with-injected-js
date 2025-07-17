@@ -1,0 +1,21 @@
+{
+    "name": "pdf-with-injected-js/pdf-with-injected-js",
+    "require": {
+        "tecnickcom/tc-lib-pdf": "8.1.5",
+        "smalot/pdfparser": "^2.12",
+        "tecnickcom/tc-lib-pdf-parser": "^3.0",
+        "setasign/fpdi": "^2.0",
+        "setasign/fpdf": "^1.8",
+        "dompdf/dompdf": "^3.1",
+        "tecnickcom/tcpdf": "^6.10",
+        "ddn/sapp": "^1.5",
+        "tobiasdierich/php-qpdf": "^0.0.2",
+        "mpdf/mpdf": "^8.2",
+        "spatie/pdf-to-image": "^1.2",
+        "knplabs/knp-snappy": "^1.5",
+        "phpoffice/phpword": "^1.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.2"
+    }
+}
