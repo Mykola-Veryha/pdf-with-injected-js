@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\SimpleTest" file="/www/pdf-with-injected-js/tests/Unit/SimpleTest.php" tests="2" assertions="3" errors="0" failures="0" skipped="0" time="0.000695">
+    <testcase name="testBasicFunctionality" file="/www/pdf-with-injected-js/tests/Unit/SimpleTest.php" line="11" class="Tests\Unit\SimpleTest" classname="Tests.Unit.SimpleTest" assertions="1" time="0.000427"/>
+    <testcase name="testFileExists" file="/www/pdf-with-injected-js/tests/Unit/SimpleTest.php" line="16" class="Tests\Unit\SimpleTest" classname="Tests.Unit.SimpleTest" assertions="2" time="0.000268"/>
+  </testsuite>
+</testsuites>
