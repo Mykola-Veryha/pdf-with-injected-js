@@ -37,6 +37,7 @@ class PdfStructureRepairer
     public function repairPdfContent(string $content): string
     {
         try {
+            $content = $this->repairMissingEndobj($content);
             $content = $this->repairPdfHeader($content);
             $content = $this->repairXrefTable($content);
 
@@ -226,6 +227,56 @@ class PdfStructureRepairer
             if ($xrefPos !== false) {
                 $content .= "startxref\n" . $xrefPos . "\n%%EOF\n";
             }
+        }
+
+        return $content;
+    }
+
+    /**
+     * Repair missing endobj for objects that are not properly closed.
+     * Only edits the broken part, does not break other parts.
+     */
+    private function repairMissingEndobj(string $content): string
+    {
+        // Regex to find all object starts
+        $pattern = '/(\d+ \d+ obj\b)/';
+        preg_match_all($pattern, $content, $matches, PREG_OFFSET_CAPTURE);
+        $object_starts = $matches[0];
+
+        $insertions = [];
+        $object_count = count($object_starts);
+        for ($i = 0; $i < $object_count; $i++) {
+            $start_offset = (int) $object_starts[$i][1];
+            $next_offset = isset($object_starts[$i + 1]) ? $object_starts[$i + 1][1] : null;
+
+            // Find the end of this object (either next object, or trailer/xref/startxref, or end of a file)
+            if ($next_offset === null) {
+                // Last object: search for trailer/xref/startxref or end of a file
+                $end_search = preg_match(
+                    '/\b(trailer|xref|startxref|%%EOF)\b/',
+                    $content,
+                    $end_match,
+                    PREG_OFFSET_CAPTURE,
+                    $start_offset
+                );
+                $end_offset = $end_search ? $end_match[0][1] : strlen($content);
+            } else {
+                $end_offset = $next_offset;
+            }
+
+            $object_body = substr($content, $start_offset, $end_offset - $start_offset);
+            if (!str_contains($object_body, 'endobj')) {
+                // Insert endobj just before the next object/trailer/xref/startxref/EOF
+                $insertions[] = [
+                    'pos' => $end_offset,
+                    'text' => "\nendobj\n"
+                ];
+            }
+        }
+
+        // Apply insertions in reverse order so offsets don't shift
+        foreach (array_reverse($insertions) as $ins) {
+            $content = substr($content, 0, $ins['pos']) . $ins['text'] . substr($content, $ins['pos']);
         }
 
         return $content;

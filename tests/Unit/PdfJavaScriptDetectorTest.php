@@ -77,6 +77,7 @@ class PdfJavaScriptDetectorTest extends TestCase
             'invalid--has-javascript-in-uri.pdf' => ['tests/Data/invalid--has-javascript-in-uri.pdf', true],
             'invalid--has-javascript.pdf' => ['tests/Data/invalid--has-javascript.pdf', true],
             'invalid--without-start-xref.pdf' => ['tests/Data/invalid--without-start-xref.pdf', true],
+            'invalid--has-javascript-from-ticket-pmi-14493.pdf' => ['tests/Data/invalid--has-javascript-from-ticket-pmi-14493.pdf', true],
 
             // PayloadsAllThePDFs directory - all contain injected JavaScript
             'payload1.pdf' => ['tests/Data/PayloadsAllThePDFs/payload1.pdf', true],
